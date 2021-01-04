@@ -1,0 +1,18 @@
+@import '../../global.scss';
+
+table {
+  width: 80vw;
+  max-width: 1200px;
+  background: $loblolly;
+  padding: 10px;
+  border: 1px solid darken($loblolly, 5%);
+}
+
+th {
+  padding: 4px;
+  text-align: left;
+}
+
+td {
+  padding: 4px;
+}

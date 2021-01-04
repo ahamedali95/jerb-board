@@ -1,6 +1,18 @@
+@import './global.scss';
+
 body {
-  margin: 0;
-  font-family: -apple-system, 'Droid Sans', 'Helvetica Neue', sans-serif;
+  margin: 30px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: $geyser;
+  color: $ebony-clay;
+  font-family: $body-font;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: $header-font;
+}
+
+h1 {
+  margin: 0 0 15px;
 }
