@@ -1,24 +1,23 @@
-import React from 'react'
-import { render, waitFor, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 
-import * as API from '../../../api'
-import { JobListingsPage } from '..'
+import { API } from '../../../api'
 import {
-  createJobListing,
-  createJobListingCategory,
-  createJobListingLocation,
+  createCategory,
+  createJobPosting,
+  createJobPostingLocation,
   createJobPoster,
 } from '../../../fixtures'
+import { JobPostingsPage } from '..'
 
 const waitForPageLoad = async () =>
   await waitFor(() => expect(screen.getByText('Category')).toBeInTheDocument())
 
-describe(JobListingsPage, () => {
+describe(JobPostingsPage, () => {
   const jobListingPostedAt = '2020-12-30'
-  const jobListingCategory = createJobListingCategory({ name: 'Software Engineer' })
-  const jobListingLocation = createJobListingLocation({ name: 'The Gnar Company' })
+  const jobListingCategory = createCategory({ name: 'Software Engineer' })
+  const jobListingLocation = createJobPostingLocation({ name: 'The Gnar Company' })
   const jobPoster = createJobPoster({ full_name: 'Joe Schmoe' })
-  const jobListing = createJobListing({
+  const jobListing = createJobPosting({
     category: jobListingCategory,
     job_poster: jobPoster,
     location: jobListingLocation,
@@ -27,7 +26,7 @@ describe(JobListingsPage, () => {
   })
 
   beforeEach(() => {
-    jest.spyOn(API, 'getJobListings').mockResolvedValue({ data: [jobListing] })
+    jest.spyOn(API.jobPostings, 'loadAll').mockResolvedValue({ data: [jobListing] })
   })
 
   afterEach(() => {
@@ -35,15 +34,15 @@ describe(JobListingsPage, () => {
   })
 
   it('renders the page header', async () => {
-    render(<JobListingsPage />)
+    render(<JobPostingsPage />)
 
     await waitForPageLoad()
 
-    expect(screen.getByRole('heading', { name: 'Job Listings' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Job Postings' })).toBeInTheDocument()
   })
 
   it('lists the required attributes for each job listing', async () => {
-    render(<JobListingsPage />)
+    render(<JobPostingsPage />)
 
     await waitForPageLoad()
 

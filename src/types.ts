@@ -1,9 +1,9 @@
-export interface JobListingCategory {
+export interface Category {
   id: number
   name: string
 }
 
-export interface JobListingLocation {
+export interface Location {
   id: number
   name: string
   street_address_1?: string
@@ -13,22 +13,22 @@ export interface JobListingLocation {
   zip_code: string
 }
 
-export interface JobListingPoster {
+export interface JobPoster {
   id: number
   full_name: string
 }
 
-export interface JobListing {
+export interface JobPosting {
   id: number
   title: string
   status: string
   description?: string
   posted_at: string
-  category: JobListingCategory
-  location: JobListingLocation
-  job_poster: JobListingPoster
+  category: Category
+  location: Location
+  job_poster: JobPoster
 }
 
-export interface JobListingResults {
-  data: JobListing[]
+export interface JobPostingResults {
+  data: JobPosting[]
 }

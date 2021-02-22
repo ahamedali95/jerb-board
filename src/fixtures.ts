@@ -1,16 +1,12 @@
-import { JobListing, JobListingCategory, JobListingLocation, JobListingPoster } from './types'
+import { Category, JobPoster, JobPosting, Location } from './types'
 
-export const createJobListingCategory = (
-  overrides: Partial<JobListingCategory> = {},
-): JobListingCategory => ({
+export const createCategory = (overrides: Partial<Category> = {}): Category => ({
   id: -1,
   name: 'job-listing-category-name',
   ...overrides,
 })
 
-export const createJobListingLocation = (
-  overrides: Partial<JobListingLocation> = {},
-): JobListingLocation => ({
+export const createJobPostingLocation = (overrides: Partial<Location> = {}): Location => ({
   id: -1,
   name: 'job-listing-location-name',
   street_address_1: 'job-listing-location-address-1',
@@ -21,19 +17,19 @@ export const createJobListingLocation = (
   ...overrides,
 })
 
-export const createJobPoster = (overrides: Partial<JobListingPoster> = {}): JobListingPoster => ({
+export const createJobPoster = (overrides: Partial<JobPoster> = {}): JobPoster => ({
   id: -1,
   full_name: 'job-listing-poster-full-name',
   ...overrides,
 })
 
-export const createJobListing = (overrides: Partial<JobListing> = {}): JobListing => ({
+export const createJobPosting = (overrides: Partial<JobPosting> = {}): JobPosting => ({
   id: -1,
   title: 'job-listing-title',
   status: 'job-listing-status',
   posted_at: '2020-12-30T12:00:00Z',
-  category: createJobListingCategory(),
-  location: createJobListingLocation(),
+  category: createCategory(),
+  location: createJobPostingLocation(),
   job_poster: createJobPoster(),
   ...overrides,
 })

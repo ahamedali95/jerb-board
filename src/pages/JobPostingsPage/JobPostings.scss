@@ -1,6 +1,6 @@
 @import '../../global.scss';
 
-table {
+.JobPostings-table {
   width: 80vw;
   max-width: 1200px;
   background: $loblolly;
@@ -8,11 +8,11 @@ table {
   border: 1px solid darken($loblolly, 5%);
 }
 
-th {
+.JobPostings-tableData {
   padding: 4px;
-  text-align: left;
 }
 
-td {
+.JobPostings-tableHeader {
   padding: 4px;
+  text-align: left;
 }
