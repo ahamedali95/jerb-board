@@ -64,7 +64,7 @@ HTTP status: `200 (ok)`
 
 Body:
 
-```
+```js
 {
     id: Integer
     title: String
@@ -103,7 +103,7 @@ HTTP status: `200 (ok)`
 
 Body:
 
-```
+```js
   {
     id: Integer
     name: String
@@ -122,7 +122,7 @@ HTTP status: `200 (ok)`
 
 Body:
 
-```
+```js
   {
     id: Integer
     name: String
@@ -146,7 +146,7 @@ HTTP status: `200 (ok)`
 
 Body:
 
-```
+```js
   {
     id: Integer
     full_name: String
@@ -161,7 +161,7 @@ HTTP method and endpoint: `POST /api/v1/job_postings`
 
 Params:
 
-```
+```js
 {
   category_id: Integer
   description: String
@@ -177,7 +177,7 @@ HTTP status: `201 (created)`
 
 Body:
 
-```
+```js
 {
     id: Integer
     title: String
