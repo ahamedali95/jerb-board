@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 import { endpoints } from '../endpoints'
-import { JobPostingResults } from '../../types'
+import { JobPostingsApiResponse } from '../../types'
 
 export interface JobPostingApi {
-  loadAll: () => Promise<JobPostingResults>
+  loadAll: () => Promise<JobPostingsApiResponse>
 }
 
 export const jobPostings: JobPostingApi = {

@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios'
+
 export interface Category {
   id: number
   name: string
@@ -29,6 +31,6 @@ export interface JobPosting {
   job_poster: JobPoster
 }
 
-export interface JobPostingResults {
+export interface JobPostingsApiResponse extends AxiosResponse {
   data: JobPosting[]
 }
