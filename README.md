@@ -52,6 +52,13 @@ Subtasks:
 
 ## API Documentation
 
+### Base URL
+
+https://jerbyjerbs-rails.herokuapp.com/api
+
+You'll need to set this value as the REACT_APP_API_ENDPOINT in the .env.local
+file.
+
 ### Get a Job Posting
 
 **Request**
