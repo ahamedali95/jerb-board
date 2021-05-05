@@ -19,7 +19,7 @@ This is a multi-phased engagement. The goal of this phase is to build upon the e
 
 The client has booked 2-4 hours of your time to complete the tasks outlined below.
 
-You may add any tool, framework, or technology to complete the task. The existing code may be modified in any way necessary to achieve your goal. However, you must ensure that all current functionality remains intact. Please feel free to ask questions about the project with other Gnar Team Members.
+You may add any tool, framework, or technology to complete the task. The existing code may be modified in any way necessary to achieve your goal. However, you must ensure that all current functionality remains intact. Please feel free to reach out to [Mike Stone](mailto:mike@thegnar.co) with any questions about the project.
 
 Submit the results of your three completed tasks as a Pull Request for the team to review.
 
