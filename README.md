@@ -248,6 +248,17 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### `yarn format`
+
+Runs Prettier on all JSON and `ts(x)` files with `--write` option. This will automatically fix any formatting errors found.
+
+To list errors without making changes, see [`yarn format:check`](#yarn-formatcheck)
+
+
+### `yarn format:check`
+
+Runs Prettier on all JSON and `ts(x)` files with `--check` option. This will list any formatting errors found but not change any files..
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
