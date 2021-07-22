@@ -2,13 +2,23 @@ import React, { useState, FunctionComponent, useEffect } from 'react';
 
 import { API } from '../../api';
 import { JobPosting } from '../../types';
-import { JobPostings } from './JobPostings';
+import JobPostings from './JobPostings';
+import {currentListing} from "../../redux/listingStatus";
+import {connect} from "react-redux";
 
-const JobPostingsPage: FunctionComponent = (props) => {
+type JobPostingsPageProps = {
+  onJobClick: (val: string | null) => unknown;
+};
+
+const JobPostingsPage: FunctionComponent<JobPostingsPageProps> = ({ onJobClick }) => {
   const [ jobPostings, setJobPostings ] = useState<JobPosting[]>([]);
   const [ loading, setLoading ] = useState<boolean>(true);
 
-  const fetchJobPostings = async () => {
+  const handleJobClick = (id: string): void => {
+    onJobClick(id);
+  };
+
+  const fetchJobPostings = async (): Promise<void> => {
     const data = await API.jobPostings.loadAll();
 
     setJobPostings(data.data);
@@ -27,11 +37,22 @@ const JobPostingsPage: FunctionComponent = (props) => {
               :
               <>
                 <h1>Job Postings</h1>
-                <JobPostings jobPostings={jobPostings} />
+                <JobPostings
+                    jobPostings={jobPostings}
+                    onJobClick={handleJobClick}
+                />
               </>
         }
     </>
   );
 };
 
-export default JobPostingsPage;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onJobClick: (val: string | null) => {
+      dispatch(currentListing(val))
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(JobPostingsPage);
