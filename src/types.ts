@@ -24,8 +24,7 @@ export interface JobPosting {
   id: number
   title: string
   status: string
-  description?: string
-  posted_at: string
+
   category: Category
   location: Location
   job_poster: JobPoster

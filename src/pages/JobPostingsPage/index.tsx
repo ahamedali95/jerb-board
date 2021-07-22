@@ -1,40 +1,37 @@
-import React from 'react'
+import React, { useState, FunctionComponent, useEffect } from 'react';
 
-import { API } from '../../api'
-import { JobPosting } from '../../types'
-import { JobPostings } from './JobPostings'
+import { API } from '../../api';
+import { JobPosting } from '../../types';
+import { JobPostings } from './JobPostings';
 
-interface State {
-  jobPostings: JobPosting[]
-  loading: boolean
-}
+const JobPostingsPage: FunctionComponent = (props) => {
+  const [ jobPostings, setJobPostings ] = useState<JobPosting[]>([]);
+  const [ loading, setLoading ] = useState<boolean>(true);
 
-export class JobPostingsPage extends React.Component<{}, State> {
-  state = {
-    jobPostings: [],
-    loading: true,
-  }
+  const fetchJobPostings = async () => {
+    const data = await API.jobPostings.loadAll();
 
-  componentDidMount() {
-    API.jobPostings.loadAll().then(({ data }) => {
-      this.setState({
-        jobPostings: data,
-        loading: false,
-      })
-    })
-  }
+    setJobPostings(data.data);
+    setLoading(false);
+  };
 
-  render() {
-    if (this.state.loading) {
-      return null
-    }
+  useEffect(() => {
+    fetchJobPostings();
+  }, []);
 
-    return (
-      <div>
-        <h1>Job Postings</h1>
+  return (
+      <>
+        {
+          loading ?
+              <p>loading</p>
+              :
+              <>
+                <h1>Job Postings</h1>
+                <JobPostings jobPostings={jobPostings} />
+              </>
+        }
+    </>
+  );
+};
 
-        <JobPostings jobPostings={this.state.jobPostings} />
-      </div>
-    )
-  }
-}
+export default JobPostingsPage;

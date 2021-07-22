@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { JobPostingsPage } from './pages/JobPostingsPage'
+import JobPostingsPage from './pages/JobPostingsPage'
 
 const routes = {
   home: '/',
