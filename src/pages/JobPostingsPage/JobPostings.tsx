@@ -19,16 +19,14 @@ const jobPostingsStyles = () => createStyles({
 
 interface JobPostingsProps extends WithStyles<typeof jobPostingsStyles> {
     jobPostings: JobPosting[];
-    onJobClick: (val: number) => unknown;
 }
 
 const postedDate = (postedAt: string) => postedAt.split('T')[0];
 
-const JobPostings: FunctionComponent<JobPostingsProps> = ({classes, jobPostings, onJobClick}) => {
+const JobPostings: FunctionComponent<JobPostingsProps> = ({ classes, jobPostings }) => {
     const history: History = useHistory();
 
     const handleTitleClick = (id: number): void => {
-        onJobClick(id);
         history.push(`/job_postings/${id}`);
     };
 
@@ -47,22 +45,24 @@ const JobPostings: FunctionComponent<JobPostingsProps> = ({classes, jobPostings,
             </thead>
 
             <tbody>
-            {jobPostings.map((posting: JobPosting) => (
-                <tr key={posting.id}>
-                    <td className='JobPostings-tableData'>{postedDate(posting.posted_at)}</td>
-                    <td
-                        className='JobPostings-tableData'
-                        onClick={() => handleTitleClick(posting.id)}
-                    >
-                        <Link className={classes.title}>{posting.title}</Link>
-                    </td>
-                    <td className='JobPostings-tableData'>{posting.job_poster.full_name}</td>
-                    <td className='JobPostings-tableData'>{posting.category.name}</td>
-                    <td className='JobPostings-tableData'>{posting.location.name}</td>
-                    <td className='JobPostings-tableData'>{posting.status}</td>
-                    <td className='JobPostings-tableData'></td>
-                </tr>
-            ))}
+            {
+                jobPostings.map((posting: JobPosting) => (
+                    <tr key={posting.id}>
+                        <td className='JobPostings-tableData'>{postedDate(posting.posted_at)}</td>
+                        <td
+                            className='JobPostings-tableData'
+                            onClick={() => handleTitleClick(posting.id)}
+                        >
+                            <Link className={classes.title}>{posting.title}</Link>
+                        </td>
+                        <td className='JobPostings-tableData'>{posting.job_poster.full_name}</td>
+                        <td className='JobPostings-tableData'>{posting.category.name}</td>
+                        <td className='JobPostings-tableData'>{posting.location.name}</td>
+                        <td className='JobPostings-tableData'>{posting.status}</td>
+                        <td className='JobPostings-tableData'></td>
+                    </tr>
+                ))
+            }
             </tbody>
         </table>
     )

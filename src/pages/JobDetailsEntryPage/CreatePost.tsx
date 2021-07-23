@@ -1,11 +1,10 @@
-import React, {ChangeEvent, FunctionComponent, useMemo} from 'react';
-import {
-    Grid, TextField, Button, withStyles, createStyles, Theme, WithStyles, Select, InputLabel, MenuItem, FormControl
-} from '@material-ui/core';
+import React, { ChangeEvent, FunctionComponent, useMemo } from 'react';
+import { Grid, TextField, Button, withStyles, createStyles, Theme, WithStyles, Select, InputLabel, MenuItem,
+    FormControl, CircularProgress } from '@material-ui/core';
 
-import { InitialState as CreatePostState} from '../reducers/createPostReducer';
-import { InitialState as JobDetails } from '../../redux/reducers/jobDetails';
-import {Category, JobPoster, Location} from '../../types';
+import type { InitialState as CreatePostState } from '../reducers/createPostReducer';
+import type { InitialState as JobDetails } from '../../redux/reducers/jobDetails';
+import type { Category, JobPoster, Location } from '../../types';
 
 const createPostStyles = (theme: Theme) => createStyles({
     topDivider: {
@@ -22,6 +21,7 @@ const createPostStyles = (theme: Theme) => createStyles({
 });
 
 interface CreatePostProps extends WithStyles<typeof createPostStyles> {
+    loading: boolean;
     additionalPostDetails: JobDetails;
     onChange: (property: keyof CreatePostState, value: any) => unknown;
     onResetClick: () => unknown;
@@ -29,7 +29,7 @@ interface CreatePostProps extends WithStyles<typeof createPostStyles> {
     data: CreatePostState;
 }
 
-const CreatePost: FunctionComponent<CreatePostProps> = ({ classes, onChange, onResetClick, onPostClick, data, additionalPostDetails }) => {
+const CreatePost: FunctionComponent<CreatePostProps> = ({ classes, onChange, onResetClick, onPostClick, data, additionalPostDetails, loading }) => {
     const dropdownValuesForLocations = useMemo(() => {
         return additionalPostDetails.locations.data.map((location: Location) => {
 
@@ -119,7 +119,7 @@ const CreatePost: FunctionComponent<CreatePostProps> = ({ classes, onChange, onR
                 </Grid>
                 <Grid
                     item
-                    xs={3}
+                    xs={6}
                 >
                     <FormControl
                         error={!!additionalPostDetails.locations.error}
@@ -174,11 +174,20 @@ const CreatePost: FunctionComponent<CreatePostProps> = ({ classes, onChange, onR
                         </Grid>
                         <Grid item>
                             <Button
+                                disabled={loading}
                                 onClick={onPostClick}
                                 color='primary'
                                 variant='contained'
                             >
-                                Post
+                                {
+                                    loading ?
+                                        <CircularProgress
+                                            color='secondary'
+                                            size={25}
+                                        />
+                                    :
+                                        'Post'
+                                }
                             </Button>
                         </Grid>
                     </Grid>

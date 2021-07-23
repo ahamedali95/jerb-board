@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {PayloadAction} from "@reduxjs/toolkit/dist/createAction";
-import {Category, JobPoster, Location} from "../../types";
+import { PayloadAction } from '@reduxjs/toolkit/dist/createAction';
+
+import { Category, JobPoster, Location } from '../../types';
 
 //Allow me to introduce redux-toolkit which is an opinionated redux library that includes all the procedure
 //for fast and efficient Redux development. Please checkout my blog on this topic: https://ahamedblogs.wordpress.com/2020/09/24/writing-redux-logic-efficiently-with-redux-toolkit/

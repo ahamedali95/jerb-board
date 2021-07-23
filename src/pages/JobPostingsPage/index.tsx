@@ -1,27 +1,16 @@
 import React, { useState, FunctionComponent, useEffect } from 'react';
-import {connect} from 'react-redux';
 import { Grid, Button } from '@material-ui/core';
-import { History } from 'history';
 import { useHistory } from 'react-router';
+import { History } from 'history';
 
 import { API } from '../../api';
 import { JobPosting } from '../../types';
 import JobPostings from './JobPostings';
-import { currentPosting } from '../../redux/reducers/postingStatus';
 
-
-type JobPostingsPageProps = {
-  onJobClick: (val: number) => unknown;
-};
-
-const JobPostingsPage: FunctionComponent<JobPostingsPageProps> = ({ onJobClick }) => {
+const JobPostingsPage: FunctionComponent = () => {
   const [ jobPostings, setJobPostings ] = useState<JobPosting[]>([]);
   const [ loading, setLoading ] = useState<boolean>(true);
   const history: History = useHistory();
-
-  const handleJobClick = (id: number): void => {
-    onJobClick(id);
-  };
 
   const fetchJobPostings = async (): Promise<void> => {
     const data = await API.jobPostings.loadAll();
@@ -58,22 +47,11 @@ const JobPostingsPage: FunctionComponent<JobPostingsPageProps> = ({ onJobClick }
                     </Button>
                   </Grid>
                 </Grid>
-                <JobPostings
-                    jobPostings={jobPostings}
-                    onJobClick={handleJobClick}
-                />
+                <JobPostings jobPostings={jobPostings} />
               </>
         }
     </>
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    onJobClick: (val: number) => {
-      dispatch(currentPosting(val))
-    }
-  };
-};
-
-export default connect(null, mapDispatchToProps)(JobPostingsPage);
+export default JobPostingsPage;

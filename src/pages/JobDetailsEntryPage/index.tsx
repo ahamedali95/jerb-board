@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useReducer, useCallback, useEffect} from 'react';
+import React, {FunctionComponent, useReducer, useCallback, useEffect, useState} from 'react';
 import { Typography, Divider, Box, withStyles, createStyles, Theme, WithStyles } from '@material-ui/core';
 import {connect} from 'react-redux';
 import { useHistory } from 'react-router';
@@ -10,6 +10,7 @@ import { InitialState as CreatePostState, initialState} from '../reducers/create
 import { fetchAdditionalJobDetails } from '../../redux/actions/asyncActions';
 import { InitialState as JobDetails } from '../../redux/reducers/jobDetails';
 import {API} from '../../api';
+import {Alert} from "@material-ui/lab";
 
 const jobDetailsEntryPageStyles = (theme: Theme) => createStyles({
     topDivider: {
@@ -24,6 +25,8 @@ interface JobDetailsEntryPageProps extends WithStyles<typeof jobDetailsEntryPage
 
 const JobDetailsEntryPage: FunctionComponent<JobDetailsEntryPageProps> = ({ classes, fetchJobDetails, jobDetails }) => {
     const [ state, dispatch ] = useReducer(createPostReducer, initialState, undefined);
+    const [ loading, setLoading ] = useState<boolean>(false);
+    const [ error, setError ] = useState<boolean>(false);
     const history: History = useHistory();
 
     useEffect(() => {
@@ -41,22 +44,31 @@ const JobDetailsEntryPage: FunctionComponent<JobDetailsEntryPageProps> = ({ clas
     }, [ dispatch ]);
 
     const handlePostClick = useCallback(async (): Promise<void> => {
-        const { data } = await API.jobPostings.createJobPosting(state);
-        history.push('/');
+        try {
+            setLoading(true);
+            await API.jobPostings.createJobPosting(state);
+            setLoading(false);
+            history.push('/');
+        } catch(e) {
+            setLoading(false);
+            setError(true);
+        }
 
     }, [ state ]);
 
-    console.log(state)
-
     return (
         <>
-            <Typography variant='h4'>Enter Details</Typography>
+            <Typography variant='h4'>Enter Job Details</Typography>
             <Box mt={2} />
             <Divider className={classes.topDivider} />
             <Box mt={2} />
             <Typography variant='body2'>This information will be shown to job seekers</Typography>
             <Box mt={3} />
+            {
+                error && <Alert severity='error'>Unable to retrieve job posting. Please try again later. If issue persists, then contact the support team</Alert>
+            }
             <CreatePost
+                loading={loading}
                 data={state}
                 onChange={handleChange}
                 onResetClick={handleResetClick}

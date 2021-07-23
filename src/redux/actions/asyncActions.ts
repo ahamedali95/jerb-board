@@ -8,6 +8,9 @@ import { InitialState as JobDetails } from "../reducers/jobDetails";
 //our component without any sort of mocking. In our scenario, we are store our job details information like
 //locations, job posters and categories in Redux store such that when the new job posting page is loaded, we are
 //simply returning previous data instead of refetching the data. So we leveraged Redux store as cache mechanism.
+//my blog on async management in Redux ecosystem: https://ahamedblogs.wordpress.com/2020/09/06/__trashed/
+
+
 /**
  * Known as the "async action creator" that will be called inside our component. Instead of returning regular action objects, it returns a function.
  *
