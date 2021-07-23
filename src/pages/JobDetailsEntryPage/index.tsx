@@ -10,7 +10,7 @@ import { InitialState as CreatePostState, initialState} from '../reducers/create
 import { fetchAdditionalJobDetails } from '../../redux/actions/asyncActions';
 import { InitialState as JobDetails } from '../../redux/reducers/jobDetails';
 import {API} from '../../api';
-import {Alert} from "@material-ui/lab";
+import {Alert} from '@material-ui/lab';
 
 const jobDetailsEntryPageStyles = (theme: Theme) => createStyles({
     topDivider: {

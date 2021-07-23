@@ -30,7 +30,6 @@ const JobDetails: FunctionComponent = ({ }) => {
         }
     };
 
-    //@ts-ignore
     useEffect(() => {
         fetchJobPosting();
 

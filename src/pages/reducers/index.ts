@@ -1,4 +1,4 @@
-import createPostReducer from "./createPostReducer";
+import createPostReducer from './createPostReducer';
 
 export {
     createPostReducer

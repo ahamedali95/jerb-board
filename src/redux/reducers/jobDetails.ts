@@ -28,6 +28,7 @@ interface payload extends AsyncState<{}> {
     property: keyof InitialState;
 }
 
+// Improvement: We can make this generic!
 const jobDetails = createSlice( {
     name: 'jobDetails',
     initialState: initialState,
@@ -36,8 +37,7 @@ const jobDetails = createSlice( {
         // state directly inside createReducer and it will internally create immutable copies which forms the new state. very important!
         additionalJobDetails(state: InitialState, action: PayloadAction<payload>) {
             const { payload } = action;
-            //@ts-ignore
-            state[payload.property] = { loading: payload.loading, data: (payload.data), error: payload.error };
+            state[payload.property] = { loading: payload.loading, data: (payload.data as any), error: payload.error };
         }
     }
 });

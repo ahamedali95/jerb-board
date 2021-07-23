@@ -28,12 +28,15 @@ const ViewPost: FunctionComponent<ViewPostProps> = ({classes, data}) => {
     const getAddress = useMemo((): string => {
         const location: Location | undefined = data?.location;
 
-        return `${location?.name} ${location?.street_address_1} ${location?.street_address_2}, ${location?.city} ${location?.state} ${location?.zip_code}`;
+        return location ? `${location?.name} ${location?.street_address_1} ${location?.street_address_2}, ${location?.city} ${location?.state} ${location?.zip_code}` : '';
     }, [data?.location]);
 
     return (
         <>
-            <Grid container>
+            <Grid
+                container
+                justifyContent='center'
+            >
                 <Grid
                     item
                     xs={1}

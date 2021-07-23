@@ -1,4 +1,4 @@
-import createTheme, {ThemeOptions} from "@material-ui/core/styles/createTheme";
+import createTheme, { ThemeOptions } from '@material-ui/core/styles/createTheme';
 
 // Added Redux doc inspired color schemes
 // We can still add more configurations to our theme.
@@ -10,10 +10,10 @@ import createTheme, {ThemeOptions} from "@material-ui/core/styles/createTheme";
 const theme: ThemeOptions = {
     palette: {
         primary: {
-            main: "#6d1cac"
+            main: '#6d1cac'
         },
         secondary: {
-            main: "#7431ca"
+            main: '#7431ca'
         }
     },
     props: {

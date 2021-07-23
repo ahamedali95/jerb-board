@@ -1,5 +1,5 @@
 import { additionalJobDetails } from '../reducers/jobDetails';
-import { InitialState as JobDetails } from "../reducers/jobDetails";
+import { InitialState as JobDetails } from '../reducers/jobDetails';
 
 //My design intention behind using redux-thunk:
 //Whenever we are dealing with asynchronous data, it is better we abstract that logic outside of our component. This
@@ -12,7 +12,7 @@ import { InitialState as JobDetails } from "../reducers/jobDetails";
 
 
 /**
- * Known as the "async action creator" that will be called inside our component. Instead of returning regular action objects, it returns a function.
+ * Known as the 'async action creator' that will be called inside our component. Instead of returning regular action objects, it returns a function.
  *
  * @function fetchAdditionalJobDetails
  * @return {function} thunk
