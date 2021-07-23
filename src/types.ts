@@ -35,6 +35,18 @@ export interface JobPostingsApiResponse extends AxiosResponse {
   data: JobPosting[]
 }
 
+export interface JobPostingApiResponse extends AxiosResponse {
+  data: JobPosting
+}
+
+export interface LocationApiResponse extends AxiosResponse {
+  data: Location[];
+}
+
+export interface JobPostersApiResponse extends AxiosResponse {
+  data: JobPoster[];
+}
+
 export interface CategoriesApiResponse extends AxiosResponse {
   data: Category[]
 }

@@ -1,40 +1,57 @@
-import React from 'react'
+import React, { useState, FunctionComponent, useEffect } from 'react';
+import { Grid, Button } from '@material-ui/core';
+import { useHistory } from 'react-router';
+import { History } from 'history';
 
-import { API } from '../../api'
-import { JobPosting } from '../../types'
-import { JobPostings } from './JobPostings'
+import { API } from '../../api';
+import { JobPosting } from '../../types';
+import JobPostings from './JobPostings';
 
-interface State {
-  jobPostings: JobPosting[]
-  loading: boolean
-}
+const JobPostingsPage: FunctionComponent = () => {
+  const [ jobPostings, setJobPostings ] = useState<JobPosting[]>([]);
+  const [ loading, setLoading ] = useState<boolean>(true);
+  const history: History = useHistory();
 
-export class JobPostingsPage extends React.Component<{}, State> {
-  state = {
-    jobPostings: [],
-    loading: true,
-  }
+  const fetchJobPostings = async (): Promise<void> => {
+    const data = await API.jobPostings.loadAll();
 
-  componentDidMount() {
-    API.jobPostings.loadAll().then(({ data }) => {
-      this.setState({
-        jobPostings: data,
-        loading: false,
-      })
-    })
-  }
+    setJobPostings(data.data);
+    setLoading(false);
+  };
 
-  render() {
-    if (this.state.loading) {
-      return null
-    }
+  useEffect(() => {
+    fetchJobPostings();
+  }, []);
 
-    return (
-      <div>
-        <h1>Job Postings</h1>
+  return (
+      <>
+        {
+          loading ?
+              <p>Loading...</p>
+              :
+              <>
+                <Grid
+                    container
+                    justifyContent='space-between'
+                >
+                  <Grid item>
+                    <h1>Job Postings</h1>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                        onClick={() => history.push('/job_postings/new')}
+                        color='secondary'
+                        variant='outlined'
+                    >
+                      Create Job Posting
+                    </Button>
+                  </Grid>
+                </Grid>
+                <JobPostings jobPostings={jobPostings} />
+              </>
+        }
+    </>
+  );
+};
 
-        <JobPostings jobPostings={this.state.jobPostings} />
-      </div>
-    )
-  }
-}
+export default JobPostingsPage;
