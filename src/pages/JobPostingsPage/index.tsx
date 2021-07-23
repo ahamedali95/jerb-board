@@ -1,20 +1,25 @@
 import React, { useState, FunctionComponent, useEffect } from 'react';
+import {connect} from 'react-redux';
+import { Grid, Button } from '@material-ui/core';
+import { History } from 'history';
+import { useHistory } from 'react-router';
 
 import { API } from '../../api';
 import { JobPosting } from '../../types';
 import JobPostings from './JobPostings';
-import {currentListing} from "../../redux/listingStatus";
-import {connect} from "react-redux";
+import { currentPosting } from '../../redux/reducers/postingStatus';
+
 
 type JobPostingsPageProps = {
-  onJobClick: (val: string | null) => unknown;
+  onJobClick: (val: number) => unknown;
 };
 
 const JobPostingsPage: FunctionComponent<JobPostingsPageProps> = ({ onJobClick }) => {
   const [ jobPostings, setJobPostings ] = useState<JobPosting[]>([]);
   const [ loading, setLoading ] = useState<boolean>(true);
+  const history: History = useHistory();
 
-  const handleJobClick = (id: string): void => {
+  const handleJobClick = (id: number): void => {
     onJobClick(id);
   };
 
@@ -33,10 +38,26 @@ const JobPostingsPage: FunctionComponent<JobPostingsPageProps> = ({ onJobClick }
       <>
         {
           loading ?
-              <p>loading</p>
+              <p>Loading...</p>
               :
               <>
-                <h1>Job Postings</h1>
+                <Grid
+                    container
+                    justifyContent='space-between'
+                >
+                  <Grid item>
+                    <h1>Job Postings</h1>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                        onClick={() => history.push('/job_postings/new')}
+                        color='secondary'
+                        variant='outlined'
+                    >
+                      Create Job Posting
+                    </Button>
+                  </Grid>
+                </Grid>
                 <JobPostings
                     jobPostings={jobPostings}
                     onJobClick={handleJobClick}
@@ -47,10 +68,10 @@ const JobPostingsPage: FunctionComponent<JobPostingsPageProps> = ({ onJobClick }
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
-    onJobClick: (val: string | null) => {
-      dispatch(currentListing(val))
+    onJobClick: (val: number) => {
+      dispatch(currentPosting(val))
     }
   };
 };

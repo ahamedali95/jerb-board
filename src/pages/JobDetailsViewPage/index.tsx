@@ -1,42 +1,18 @@
 import React, {FunctionComponent, useState, useMemo, useEffect} from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import dayjs from 'dayjs';
+import {History} from 'history';
+import {connect} from 'react-redux';
+
 import { Grid, Typography, Avatar, Divider, Button, Box, Chip, withStyles, createStyles, Theme, WithStyles, Link } from '@material-ui/core';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
-import type {JobPosting, Location} from "../../types";
-import { currentListing } from '../../redux/listingStatus';
+import type { JobPosting, Location } from '../../types';
+import { currentPosting } from '../../redux/reducers/postingStatus';
 
-import dayjs from 'dayjs';
-import {History} from "history";
-import {connect} from "react-redux";
-import {API} from "../../api";
+import {API} from '../../api';
+
 dayjs.extend(require('dayjs/plugin/relativeTime'));
-
-
-const $data = {
-    "id": 1,
-    "title": "Maven Unicorn",
-    "status": "New Post",
-    "description": "Hoodie pour-over iceland raclette poke bitters. Lyft man bun ennui subway tile pop-up. Vinyl iPhone keffiyeh, edison bulb put a bird on it flannel hoodie fixie pour-over art party",
-    "posted_at": "2020-12-04T01:03:19.551Z",
-    "category": {
-        "id": 1,
-        "name": "Computers"
-    },
-    "location": {
-        "id": 1,
-        "name": "Gnar HQ",
-        "street_address_1": "19 Kingston Street",
-        "street_address_2": '',
-        "city": "Boston",
-        "state": "MA",
-        "zip_code": "02111"
-    },
-    "job_poster": {
-        "id": 1,
-        "full_name": "Bill Evans"
-    }
-};
 
 const jobDetailsStyles = (theme: Theme) => createStyles({
     title: {
@@ -52,28 +28,29 @@ const jobDetailsStyles = (theme: Theme) => createStyles({
 });
 
 interface JobDetailsProps extends WithStyles<typeof jobDetailsStyles> {
-    currentListing: string;
-    resetCurrentListing: () => unknown;
+    currentPosting: string;
+    resetCurrentPosting: () => unknown;
 }
 
-const JobDetails: FunctionComponent<JobDetailsProps> = ({ classes, currentListing, resetCurrentListing }) => {
+const JobDetails: FunctionComponent<JobDetailsProps> = ({ classes, currentPosting, resetCurrentPosting }) => {
     const [ data, setData ] = useState<JobPosting | null>(null);
     const [ loading, setLoading ] = useState<boolean>(true);
     const history: History = useHistory();
 
-    console.log(currentListing)
+    console.log(currentPosting)
 
-    const fetchJobListing = async (): Promise<void> => {
-        const data = await API.jobPostings.loadJobListing(currentListing);
+    const fetchJobPosting = async (): Promise<void> => {
+        const data = await API.jobPostings.loadJobPosting(currentPosting);
 
         setData(data.data);
         setLoading(false);
     };
 
+    //@ts-ignore
     useEffect(() => {
-        fetchJobListing();
+        fetchJobPosting();
 
-        return () => resetCurrentListing();
+        return () => resetCurrentPosting();
     }, []);
 
     const handleBackClick = (): void => {
@@ -92,7 +69,7 @@ const JobDetails: FunctionComponent<JobDetailsProps> = ({ classes, currentListin
         <>
             {
                 loading ?
-                    <p>Loading</p>
+                    <p>Loading...</p>
                     :
                     <>
                         <Grid container>
@@ -101,7 +78,7 @@ const JobDetails: FunctionComponent<JobDetailsProps> = ({ classes, currentListin
                                 onClick={handleBackClick}
                             >
                                 <KeyboardBackspaceIcon />
-                                <Box ml={1}>Back to listings</Box>
+                                <Box ml={1}>Back to Postings</Box>
                             </Button>
                         </Grid>
                         <Box mt={3} />
@@ -130,7 +107,7 @@ const JobDetails: FunctionComponent<JobDetailsProps> = ({ classes, currentListin
                                     justifyContent='space-between'
                                 >
                                     <Grid item>
-                                        <Typography className={classes.title}>{data.title}</Typography>
+                                        <Typography className={classes.title}>{data?.title}</Typography>
                                     </Grid>
                                     <Grid item>
                                         {
@@ -149,8 +126,8 @@ const JobDetails: FunctionComponent<JobDetailsProps> = ({ classes, currentListin
                                     <Chip
                                         size='small'
                                         label={data?.category?.name || ''}
-                                        color="primary"
-                                        variant="outlined"
+                                        color='primary'
+                                        variant='outlined'
                                     />
                                 </Grid>
                             </Grid>
@@ -208,16 +185,16 @@ const JobDetails: FunctionComponent<JobDetailsProps> = ({ classes, currentListin
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
     return {
-        currentListing: state.listingStatus.currentListing
+        currentPosting: state.postingStatus.currentPosting
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: any) => {
     return {
-        resetCurrentListing: () => {
-            dispatch(currentListing(null))
+        resetCurrentPosting: () => {
+            dispatch(currentPosting(null))
         }
     };
 };
